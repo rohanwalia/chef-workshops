@@ -1,26 +1,33 @@
 ---
 driver:
-  name: vagrant
+  name: ec2
+  aws_ssh_key_id: awsplayground_ohio
+  region: us-east-2
+  availability_zone: b
+  subnet_id: subnet-f113ac8b
+  instance_type: t2.micro
+  image_id: ami-03291866
+  security_group_ids: ["sg-0cb8d1612fb977743"]
+  retryable_tries: 120
 
 provisioner:
   name: chef_zero
-  # You may wish to disable always updating cookbooks in CI or other testing environments.
-  # For example:
-  #   always_update_cookbooks: <%= !ENV['CI'] %>
-  always_update_cookbooks: true
+
 
 verifier:
   name: inspec
 
+transport:
+  ssh_key: /home/vagrant/workplace/aws_playground.pem
+
 platforms:
-  - name: ubuntu-16.04
-  - name: centos-7
+  - name: RHEL-7.5
 
 suites:
   - name: default
     run_list:
-      - recipe[tomcat_cookbook::default]
+      - recipe[tomcat_cookbook::install]
     verifier:
       inspec_tests:
-        - test/integration/default
+        - test/smoke/default
     attributes:
