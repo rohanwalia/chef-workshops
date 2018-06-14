@@ -33,6 +33,28 @@ $  sudo chef-client --local-mode --runlist 'recipe[mongod_cookbook::install]'
 ```
 
 ## Run using Knife through Chef Server
+Chef Manage @ https://manage.chef.io is being used as Chef Server to Manage Nodes. 
+There is one Node on EC2 : node1-rhel that has been bootstrapped and converged. Organization Name is : chefplayground
+
+# Knife Set Up
+Download knife.rb and rsa key files from https://manage.chef.io. Create a directory .chef at the home directory and place knife.rb and rsa key files in .chef directory.
+Verify for knife connection to Chef Server.
+```sh
+$ knife ssl check
+```
+Show node that has been associated with Chef Server
+```sh
+$ knife node list
+```
+```sh
+$ knife cookbook upload mongod_cookbook
+```
+Run Chef-Client on the target node so that pulls down the cookbook form Chef Server and Executes the runlist cookbooks.
+```sh
+$ knife ssh 'name:node1-rhel' 'sudo chef-client' --ssh-user ec2-user -i <path_to_private_key> --attribute cloud.public_hostname
+```
+## Run using TEST KITCHEN
+
 
 TODO: Enter the cookbook description here.
 
