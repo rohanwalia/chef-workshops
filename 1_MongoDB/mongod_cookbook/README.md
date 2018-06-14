@@ -37,7 +37,7 @@ Chef Manage @ https://manage.chef.io is being used as Chef Server to Manage Node
 There is one Node on EC2 : node1-rhel that has been bootstrapped and converged. Organization Name is : chefplayground
 
 # Knife Set Up
-Download knife.rb and rsa key files from https://manage.chef.io. Create a directory .chef at the home directory and place knife.rb and rsa key files in .chef directory.
+Download knife.rb and rsa key files from https://manage.chef.io. Create a directory .chef at the home directory and place knife.rb and rsa key files in .chef directory. You would also need to access to private_key.pem whose corresponding public key was used to create EC2 target node.
 Verify for knife connection to Chef Server.
 ```sh
 $ knife ssl check
