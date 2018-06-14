@@ -37,7 +37,7 @@ Chef Manage @ https://manage.chef.io is being used as Chef Server to Manage Node
 There is one Node on EC2 : node1-rhel that has been bootstrapped and converged. Organization Name is : chefplayground
 
 # Knife Set Up
-Download knife.rb and rsa key files from https://manage.chef.io. Create a directory .chef at the home directory and place knife.rb and rsa key files in .chef directory. You would also need access to private_key.pem whose corresponding public key was used to create EC2 target node.
+Download knife.rb and rsa key files from https://manage.chef.io. Create a directory `.chef` at the home directory and place `knife.rb` and `rsa key` files in `.chef` directory. You would also need access to `private_key.pem` whose corresponding public key was used to create EC2 target node.
 Verify for knife connection to Chef Server.
 ```sh
 $ knife ssl check
@@ -55,7 +55,7 @@ $ knife ssh 'name:node1-rhel' 'sudo chef-client' --ssh-user ec2-user -i <path_to
 ```
 ## Run using TEST KITCHEN
 This cookbook can be tested using Test Kitchen Took/Framework. 
-.kitchen.yml file is configured to create RHEL EC2 instance on AWS. To use kitchen commands to create instance on AWS and converge cookbooks, you need to create .aws/credentials file in home directory with contents having below :
+`.kitchen.yml` file is configured to create RHEL EC2 instance on AWS. To use kitchen commands to create instance on AWS and converge cookbooks, you need to create `.aws/credentials` file in home directory with contents having below :
 ```sh
 $ vi .aws/credentials
 [default]
@@ -64,7 +64,7 @@ aws_secret_access_key = <aws_secret_access_key>
 ```
 You would also need access to private_key.pem whose corresponding public key was used to create EC2 target node.
 
-Below is the content of .kitchen.yml file in mongod_cookbook : 
+Below is the content of `.kitchen.yml` file in mongod_cookbook : 
 
 ```sh
 ---
@@ -101,9 +101,9 @@ suites:
     attributes:
 ```
 Replace aws_ssh_key_id : to the name of key in your aws account which is used to create instances
-Replace ssh_key : to the path of private_key.pem
+Replace ssh_key : to the path of `private_key.pem`
 
-Run below command to create an Instance from mongod_cookbook directory. This will create a EC2 instance in AWS according to paramteres defined in .kitchen.yml file
+Run below command to create an Instance from mongod_cookbook directory. This will create a EC2 instance in AWS according to paramteres defined in `.kitchen.yml` file
 ```sh
 $ kitchen create
 ```
