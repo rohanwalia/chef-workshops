@@ -47,6 +47,16 @@ Run Chef-Client on the target node so that pulls down the cookbook form Chef Ser
 $ knife ssh 'name:node1-rhel' 'sudo chef-client' --ssh-user ec2-user -i <path_to_private_key> --attribute cloud.public_hostname
 ```
 
+# Run using TEST KITCHEN
+This cookbook can be tested using Test Kitchen Took/Framework. 
+`.kitchen.yml` file is configured to create RHEL EC2 instance on AWS. To use kitchen commands to create instance on AWS and converge cookbooks, you need to create `.aws/credentials` file in home directory with contents having below :
+```sh
+$ vi .aws/credentials
+[default]
+aws_access_key_id = <aws_access_key_id>
+aws_secret_access_key = <aws_secret_access_key>
+```
+You would also need access to private_key.pem whose corresponding public key was used to create EC2 target node.
 
 
 
