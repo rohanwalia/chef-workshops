@@ -5,12 +5,14 @@
 # Copyright:: 2018, The Authors, All Rights Reserved.
 
   execute node.default['mongod_recipe']['package_update_command']
+ 
 
-  template '/etc/yum.repos.d/mongodb-org-3.6.repo' do
+  template node.default['mongod_recipe']['mongo_repo_file'] do
     source 'mongod_yum.erb'
   end
 
-  package 'mongodb-org'
-    service 'mongod' do
+  package node.default['mongod_recipe']['mongod_package']
+
+  service node.default['mongod_recipe']['mongod_service'] do
     action [:enable, :start]
   end
