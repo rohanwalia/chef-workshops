@@ -58,6 +58,64 @@ aws_secret_access_key = <aws_secret_access_key>
 ```
 You would also need access to private_key.pem whose corresponding public key was used to create EC2 target node.
 
+Below is the content of `.kitchen.yml` file in tomcat_cookbook : 
+
+```sh
+---
+driver:
+  name: ec2
+  aws_ssh_key_id: awsplayground_ohio
+  region: us-east-2
+  availability_zone: b
+  subnet_id: subnet-f113ac8b
+  instance_type: t2.micro
+  image_id: ami-03291866
+  security_group_ids: ["sg-0cb8d1612fb977743"]
+  retryable_tries: 120
+
+provisioner:
+  name: chef_zero
+
+verifier:
+  name: inspec
+
+transport:
+  ssh_key: /home/vagrant/workplace/aws_playground.pem
+
+platforms:
+  - name: RHEL-7.5
+
+suites:
+  - name: default
+    run_list:
+      - recipe[tomcat_cookbook::install]
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+    attributes:
+```
+Replace aws_ssh_key_id : to the name of key in your aws account which is used to create instances
+Replace ssh_key : to the path of `private_key.pem`
+
+Run below command to create an Instance from tomcat_cookbook directory. This will create a EC2 instance in AWS according to paramteres defined in `.kitchen.yml` file
+
+```sh
+$ kitchen create
+```
+Once instance is created successfully, run below command to Converge the cookbook and apply to the instance.
+```sh
+$ kitchen converge
+```
+Successful completion of this command shows that cookbooks have been applied to the test instance.
+
+You can verify by ssh into the instance.
+
+You can delete and clean up the test instance by following command
+```sh
+$ kitchen destroy
+```
+
+
 
 
 
