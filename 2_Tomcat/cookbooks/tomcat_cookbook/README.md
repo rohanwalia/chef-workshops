@@ -40,7 +40,7 @@ $ knife node list
 ```sh
 $ knife cookbook upload tomcat_cookbook
 ```
-Make sure  `cookbook_path` in knife.rb resolves the `chef-workshops/2_Tomcat/cookbooks` folder.
+> Make sure  `cookbook_path` in knife.rb resolves the `chef-workshops/2_Tomcat/cookbooks` folder.
 
 Run Chef-Client on the target node so that pulls down the cookbook form Chef Server and Executes the runlist cookbooks.
 ```sh
