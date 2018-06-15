@@ -49,6 +49,8 @@ $ knife node list
 ```sh
 $ knife cookbook upload mongod_cookbook
 ```
+> Make sure `cookbook_path` in knife.rb resolves the `chef-workshops/1_MongoDB/cookbooks` folder.
+
 Run Chef-Client on the target node so that pulls down the cookbook form Chef Server and Executes the runlist cookbooks.
 ```sh
 $ knife ssh 'name:node1-rhel' 'sudo chef-client' --ssh-user ec2-user -i <path_to_private_key> --attribute cloud.public_hostname
