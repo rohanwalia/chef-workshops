@@ -43,7 +43,7 @@ user 'tomcat' do
     source 'tomcat.service.erb'
   end
 
-  systemd_unit 'tomcat.service' do
+  systemd_unit 'daemon' do
     action :reload
     end
   
