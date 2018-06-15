@@ -26,11 +26,10 @@ user 'tomcat' do
  #Create Directory /opt/tomcat
  directory '/opt/tomcat' do
    group 'tomcat'
+   recursive true
  end
 
  execute 'tar xvf apache-tomcat-8*tar.gz -C /opt/tomcat --strip-components=1'
-
- execute 'chgrp -R tomcat /opt/tomcat/'
 
  execute 'chmod -R g+r /opt/tomcat/conf/'
  
@@ -38,18 +37,16 @@ user 'tomcat' do
  
  execute 'chown -R tomcat /opt/tomcat/'
 
- #execute 'chown -R tomcat /opt/tomcat/webapps/ /opt/tomcat/work/ /opt/tomcat/logs/ /opt/tomcat/temp/'
 
  #Install the Systemd Unit File
   template '/etc/systemd/system/tomcat.service' do
     source 'tomcat.service.erb'
   end
 
-#  systemd_unit 'tomcat.service' do
- #   action :reload
-#    end
+  systemd_unit 'tomcat.service' do
+    action :reload
+    end
   
-  execute 'systemctl daemon-reload'
 
   service 'tomcat' do
     action [:start, :enable]
