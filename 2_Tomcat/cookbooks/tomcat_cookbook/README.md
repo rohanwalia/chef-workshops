@@ -119,3 +119,5 @@ You can delete and clean up the test instance by following command
 ```sh
 $ kitchen destroy
 ```
+
+Happy Cooking !!!
