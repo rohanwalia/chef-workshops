@@ -1,4 +1,3 @@
-default['tomcat_recipe']['java_package'] = 'java-1.7.0-openjdk-devel'
 default['tomcat_recipe']['tomcat_group'] = 'tomcat'
 default['tomcat_recipe']['tomcat_group'] = 'tomcat'
 default['tomcat_recipe']['tomcat_user'] = 'tomcat'
@@ -18,12 +17,10 @@ case node['platform_family']
 
  when 'rhel'
   default['tomcat_recipe']['package_update_command'] = 'yum -y update'
-
+  default['tomcat_recipe']['java_package'] = 'java-1.7.0-openjdk-devel'
  when 'debian'
-  default['awesome_appliance']['package_update_command'] = 'apt-get update'
-
- else
-  raise "Platform not supported... exiting!"
+  default['tomcat_recipe']['package_update_command'] = 'apt-get update'
+  default['tomcat_recipe']['java_package'] = 'default-jdk'
 end
 
 
