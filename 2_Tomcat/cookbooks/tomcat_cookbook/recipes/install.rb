@@ -13,7 +13,7 @@ group = node.default['tomcat_recipe']['tomcat_group']
 tomcat_dir = node.default['tomcat_recipe']['tomcat_dir']
 tomcat_conf_dir = node.default['tomcat_recipe']['tomcat_conf_dir']
 repo_source = node.default['tomcat_recipe']['tomcat_repo_source']
-
+nologin_shell = node.default['tomcat_recipe']['nologin_shell']
 
 #Add Group tomcat
 group "#{group}"
@@ -22,12 +22,12 @@ group "#{group}"
 user "#{user}" do
     manage_home false
     group "#{group}"
-    shell '/bin/nologin'
+    shell "#{nologin_shell}"
     home "#{tomcat_dir}"
   end
 
   #Download and extract tomcat 8 - $ wget http://apache.cs.utah.edu/tomcat/tomcat-8/v8.5.20/bin/apache-tomcat-8.5.20.tar.gz
- remote_file 'apache-tomcat-8.5.20.tar.gz' do
+ remote_file node.default['tomcat_recipe']['remote_file'] do
     source "#{repo_source}"
  end
 
@@ -51,12 +51,12 @@ user "#{user}" do
     source node.default['tomcat_recipe']['tomcat_service_unit_template']
   end
 
-  systemd_unit 'daemon' do
+  systemd_unit node.default['tomcat_recipe']['tomcat_service_daemon'] do
     action :reload
     end
   
 
-  service 'tomcat' do
+  service node.default['tomcat_recipe']['tomcat_service'] do
     action [:start, :enable]
   end
 
