@@ -14,21 +14,26 @@ tomcat_dir = node.default['tomcat_recipe']['tomcat_dir']
 tomcat_conf_dir = node.default['tomcat_recipe']['tomcat_conf_dir']
 repo_source = node.default['tomcat_recipe']['tomcat_repo_source']
 nologin_shell = node.default['tomcat_recipe']['nologin_shell']
+remote_file = node.default['tomcat_recipe']['remote_file']
+
 
 #Add Group tomcat
 group "#{group}"
 
 #Add user tomcat with home directory
-user "#{user}" do
+  user "#{user}" do
     manage_home false
     group "#{group}"
-    shell "#{nologin_shell}"
+    shell '/bin/nologin'
     home "#{tomcat_dir}"
   end
 
-  #Download and extract tomcat 8 - $ wget http://apache.cs.utah.edu/tomcat/tomcat-8/v8.5.20/bin/apache-tomcat-8.5.20.tar.gz
- remote_file node.default['tomcat_recipe']['remote_file'] do
+ #Download remote file tomcat tar.gz based on repo_resource file. No need to download if file alredy exist. Improves performance. Condition checked by guard - not_if.
+ remote_file "#{remote_file}" do
     source "#{repo_source}"
+     not_if do
+       File.exists?("#{remote_file}")			
+   end
  end
 
  #Create Directory /opt/tomcat
@@ -37,7 +42,13 @@ user "#{user}" do
    recursive true
  end
 
- execute 'tar xvf apache-tomcat-8*tar.gz -C /opt/tomcat --strip-components=1'
+ #extract tomcat tar.gz. Skip it if tomcat has WEBAPP directory. Assumption is there might be existing applications deployed in WEBAPPS directory. ***This can be changed according to requirements
+ execute 'extract_file' do
+   command "tar xvf #{remote_file} -C #{tomcat_dir} --strip-components=1"
+   not_if do
+     File.directory?(node.default['tomcat_recipe']['webapp_dir']) 
+   end
+ end
 
  execute 'permission_r' do
    command "chmod -R g+r #{tomcat_conf_dir}"
