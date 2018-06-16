@@ -39,12 +39,17 @@ user "#{user}" do
 
  execute 'tar xvf apache-tomcat-8*tar.gz -C /opt/tomcat --strip-components=1'
 
- execute 'chmod -R g+r /opt/tomcat/conf/'
- 
- execute 'chmod g+x /opt/tomcat/conf/'
- 
- execute 'chown -R tomcat /opt/tomcat/'
+ execute 'permission_r' do
+   command "chmod -R g+r #{tomcat_conf_dir}"
+ end 
 
+ execute 'permission_x' do
+  command "chmod g+x #{tomcat_conf_dir}"
+ end
+
+ execute 'owner_tomcat' do
+   command "chown -R tomcat #{tomcat_dir}"
+ end
 
  #Install the Systemd Unit File
   template node.default['tomcat_recipe']['tomcat_service_unit'] do
