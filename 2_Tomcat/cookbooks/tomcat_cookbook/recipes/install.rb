@@ -4,8 +4,6 @@
 #
 # Copyright:: 2018, The Authors, All Rights Reserved.
 
-# Install java-1.7.0-openjdk-devel - sudo yum install java-1.7.0-openjdk-devel
-package node.default['tomcat_recipe']['java_package']
 
 ## Variable assignments
 user = node.default['tomcat_recipe']['tomcat_user']
@@ -16,6 +14,11 @@ repo_source = node.default['tomcat_recipe']['tomcat_repo_source']
 nologin_shell = node.default['tomcat_recipe']['nologin_shell']
 remote_file = node.default['tomcat_recipe']['remote_file']
 
+#Update package manager
+execute node.default['tomcat_recipe']['package_update_command']
+
+# Install java-1.7.0-openjdk-devel - Version can be changed in attribute.rb file.
+package node.default['tomcat_recipe']['java_package']
 
 #Add Group tomcat
 group "#{group}"
@@ -24,7 +27,7 @@ group "#{group}"
   user "#{user}" do
     manage_home false
     group "#{group}"
-    shell '/bin/nologin'
+    shell "#{nologin_shell}"
     home "#{tomcat_dir}"
   end
 
