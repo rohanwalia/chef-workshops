@@ -97,6 +97,7 @@ suites:
         - test/smoke/default
     attributes:
 ```
+> Please refer to .kitchen.yml.ubuntu for testing this recipe against Ubuntu 16.04 VM/Instances.
 Replace aws_ssh_key_id : to the name of key in your aws account which is used to create instances
 Replace ssh_key : to the path of `private_key.pem`
 
