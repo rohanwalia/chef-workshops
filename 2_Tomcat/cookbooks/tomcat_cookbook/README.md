@@ -1,10 +1,13 @@
 # tomcat_cookbook
-This cookbook installs and configure TOMCAT 8.5.9 RHEL based VM's/Instance.
+This cookbook installs and configure TOMCAT 8.5.9 on both RHEL 7.5 & UBUNTU 16.04 based VM's/Instance.
 
 # Contents of Cookbook
-- recipies/install.rb : Recipie to install and configure TOMCAT 8.5.9.
+- recipies/install.rb : Recipie to install and configure MONGO DB.
 - templates/tomcat.service.erb : tomcat.service unit file template. Reffered in install.rb
-- .kitchen.yml : Test Kitchen config to Create new EC2 instance on AWS and Converge install.rb.
+- templates/tomcat.service.ubuntu.erb : tomcat.service unit file template for Ubuntu 16.04. Reffered in install.rb
+- .kitchen.yml : Test Kitchen config to Create new EC2 instance on AWS RHEL 7.5 and Converge install.rb.
+- .kitchen.yml.ubuntu : Test Kitchen config to Create new EC2 instance on AWS Ubuntu 16.04 and Converge install.rb.
+- attributes/attribute.rb : Attributes for the recipe install.rb
 
 # RUN INSTRUCTIONS
 Below are instructions to run and test this Cookbook.
@@ -94,6 +97,8 @@ suites:
         - test/smoke/default
     attributes:
 ```
+> Please refer to .kitchen.yml.ubuntu for testing this recipe against Ubuntu 16.04 VM/Instances.
+
 Replace aws_ssh_key_id : to the name of key in your aws account which is used to create instances
 Replace ssh_key : to the path of `private_key.pem`
 
@@ -115,9 +120,4 @@ You can delete and clean up the test instance by following command
 $ kitchen destroy
 ```
 
-
-
-
-
-TODO: Enter the cookbook description here.
-
+Happy Cooking !!!
