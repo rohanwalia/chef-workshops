@@ -104,6 +104,9 @@ suites:
         - test/smoke/default
     attributes:
 ```
+> .kitchen.yml.ubuntu : Test Kitchen config to Create new EC2 instance on AWS Ubuntu 16.04 and Converge install.rb.
+attributes/attribute.rb : Attributes for the recipe install.rb
+
 Replace aws_ssh_key_id : to the name of key in your aws account which is used to create instances
 Replace ssh_key : to the path of `private_key.pem`
 
