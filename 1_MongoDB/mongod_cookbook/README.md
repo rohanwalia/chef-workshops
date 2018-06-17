@@ -1,8 +1,10 @@
-This cookbook installs and configure MONGO DB on RHEL based VM's/Instance.
+This cookbook installs and configure MONGO DB 3.6 on both RHEL 7.5 & UBUNTU 16.04 based VM's/Instance.
 # Contents of Cookbook
 - recipies/install.rb : Recipie to install and configure MONGO DB.
 - templates/mongod_yum.erb : yum config details for MONGO Package. Reffered in install.rb
 - .kitchen.yml : Test Kitchen config to Create new EC2 instance on AWS and Converge install.rb.
+- .kitchen.yml.ubuntu : Test Kitchen config to Create new EC2 instance on AWS Ubuntu 16.04 and Converge install.rb.
+- attributes/attribute.rb : Attributes for the recipe install.rb
 
 # RUN INSTRUCTIONS
 Below are instructions to run and test this Cookbook.
