@@ -1,0 +1,33 @@
+---
+driver:
+  name: ec2
+  aws_ssh_key_id: awsplayground_ohio
+  region: us-east-2
+  availability_zone: b
+  subnet_id: subnet-f113ac8b
+  instance_type: t2.micro
+  image_id: ami-6a003c0f
+  security_group_ids: ["sg-0cb8d1612fb977743"]
+  retryable_tries: 120
+
+provisioner:
+  name: chef_zero
+
+
+verifier:
+  name: inspec
+
+transport:
+  ssh_key: /home/vagrant/workplace/aws_playground.pem
+
+platforms:
+  - name: Ubuntu-16.04
+
+suites:
+  - name: default
+    run_list:
+      - recipe[mongod_cookbook::install]
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+    attributes:
