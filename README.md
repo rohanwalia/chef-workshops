@@ -1,4 +1,4 @@
-# Chef SA Workshops
+# Chef Workshops
 
 ## Instructions
 
